@@ -26,17 +26,15 @@ export async function removeContact(contactId) {
     return result;
 }
 
-export async function addContact(name, email, phone) {
+export async function addContact(data) {
     const contacts = await listContacts();
-    const newContacts = {
-        name,
-        email,
-        phone,
+    const newContact = {
         id: nanoid(),
+        ...data,
     };
-    contacts.push(newContacts);
+    contacts.push(newContact);
     await updateContacts(contacts);
-    return newContacts;
+    return newContact;
 }
 
 async function updateContact(contactId, { ...data }) {
