@@ -10,6 +10,7 @@ import {
 import {
   createContactSchema,
   updateContactSchema,
+  updateContactFavoriteSchema,
 } from "../schemas/contactsSchemas.js";
 
 import validateBody from "../helpers/validateBody.js";
@@ -32,6 +33,12 @@ contactsRouter.post(
 contactsRouter.put(
     '/:id(\\d+)',
     validateBody(updateContactSchema),
+    ctrlWrapper(updateContact)
+);
+
+contactsRouter.patch(
+    '/:id(\\d+)/favorite',
+    validateBody(updateContactFavoriteSchema),
     ctrlWrapper(updateContact)
 );
 
