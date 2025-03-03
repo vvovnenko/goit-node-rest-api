@@ -1,6 +1,7 @@
-import { DataTypes } from "sequelize";
+import {DataTypes, Deferrable} from "sequelize";
 
 import sequelize from "../Sequelize.js";
+import User from "./User.js";
 
 const Contact = sequelize.define(
     'contact',
@@ -20,6 +21,15 @@ const Contact = sequelize.define(
         favorite: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
+        },
+        owner: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: User,
+                key: 'id',
+                deferrable: Deferrable.NOT,
+            },
         },
     },
     {
