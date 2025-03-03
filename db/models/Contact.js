@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 
 import sequelize from "../Sequelize.js";
 
-const User = sequelize.define(
+const Contact = sequelize.define(
     'contact',
     {
         name: {
@@ -27,5 +27,5 @@ const User = sequelize.define(
     }
 )
 
-export default User;
+export default Contact;
 
