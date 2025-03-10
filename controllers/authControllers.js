@@ -7,6 +7,7 @@ export const register = async(req, res)=> {
         user: {
             email: user.email,
             subscription: user.subscription,
+            avatarURL: user.avatarURL,
         },
     });
 }
@@ -19,16 +20,18 @@ export const login = async(req, res)=> {
         user: {
             email: user.email,
             subscription: user.subscription,
+            avatarURL: user.avatarURL,
         },
     })
 }
 
 export const getCurrent = async(req, res)=> {
-    const {email, subscription} = req.user;
+    const {email, subscription, avatarURL} = req.user;
 
     res.json({
         email,
         subscription,
+        avatarURL,
     })
 }
 
