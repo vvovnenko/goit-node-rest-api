@@ -1,11 +1,19 @@
-import User from "../db/models/User.js";
+import { Op } from "sequelize";
 
-export const listContacts = () => User.findAll();
+import Contact from "../db/models/Contact.js";
 
-export const getContactById = (contactId) => User.findByPk(contactId);
+export const listContacts = (owner) => Contact.findAll({
+    where: { owner }
+});
 
-export const removeContact = async (contactId) => {
-    const contact = await getContactById(contactId);
+export const getContactById = (contactId, owner) => Contact.findOne({
+    where: {
+        [Op.and]: [{ id: contactId }, { owner: owner }],
+    }
+});
+
+export const removeContact = async (contactId, owner) => {
+    const contact = await getContactById(contactId, owner);
     if (!contact) {
         return null;
     }
@@ -13,10 +21,10 @@ export const removeContact = async (contactId) => {
     return contact;
 }
 
-export const addContact = (data) => User.create(data);
+export const addContact = (data, owner) => Contact.create({ ...data, owner});
 
-export const updateContact = async (contactId, data)=> {
-    const contact = await getContactById(contactId);
+export const updateContact = async (contactId, data, owner)=> {
+    const contact = await getContactById(contactId, owner);
     if (!contact) {
         return null;
     }
