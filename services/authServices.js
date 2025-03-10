@@ -11,11 +11,10 @@ export const findUser = email => User.findOne({
     where: { email },
 })
 
-export const updateUser = async (query, data)=> {
-    const user = await findUser(query);
-    if(!user) return null;
+export const updateUser = async (id, data)=> {
+    const user = await User.findByPk(id);
 
-    return user.update(data, {
+    return await user.update(data, {
         returning: true,
     });
 }
