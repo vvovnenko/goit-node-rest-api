@@ -23,13 +23,12 @@ const User = sequelize.define(
             type: DataTypes.STRING,
             defaultValue: null,
         },
+        avatarURL: DataTypes.STRING,
     },
     {
         timestamps: false,
     }
 )
-
-User.sync();
 
 export default User;
 

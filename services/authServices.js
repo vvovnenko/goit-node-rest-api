@@ -5,16 +5,16 @@ import User from "../db/models/User.js";
 import HttpError from "../helpers/HttpError.js";
 
 import { createToken } from "../helpers/jwt.js";
+import gravatar from "gravatar";
 
 export const findUser = email => User.findOne({
     where: { email },
 })
 
-export const updateUser = async (query, data)=> {
-    const user = await findUser(query);
-    if(!user) return null;
+export const updateUser = async (id, data)=> {
+    const user = await User.findByPk(id);
 
-    return user.update(data, {
+    return await user.update(data, {
         returning: true,
     });
 }
@@ -31,8 +31,9 @@ export const registerUser = async payload => {
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
-    
-    return await User.create({...payload, password: hashPassword});
+
+    const avatarURL = gravatar.url(email, { protocol: 'https', s: '250' });
+    return await User.create({...payload, password: hashPassword, avatarURL});
 }
 
 export const loginUser = async payload => {
